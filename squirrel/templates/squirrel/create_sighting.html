@@ -1,14 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>Add a new sighting of squirrel</title>
-	</head>
-	<body>
-		<p>Please create a new sighting:</p>
-    		<form method="post">{% csrf_token %}
-      			{{ form.as_p }}
-      			<input type="submit" value="Save">
-    		</form>
-   	</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Add Sighting</title></head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/4.0.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <body>
+    <nav class="navbar navbar-default ">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/sightings/">Squirrel Tracker</a></div>
+        <ul class="nav navbar-nav ">
+          <li>
+            <a href="/map/">Map View</a></li>
+          <li>
+            <a href="/sightings/">Sighting List</a></li>
+          <li>
+            <a href="/sightings/add/">Add New Sighting</a></li>
+          <li>
+            <a href="/sightings/stats/">General Stats</a></li>
+        </ul>
+      </div>
+    </nav>
+    <main role="main" class="container">
+      <p>Please create a new sighting:</p>
+      <form method="post">{% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Save">
+      </form>
+    </main>
+  </body>
 </html>
