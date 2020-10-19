@@ -4,7 +4,7 @@ from .models import Sighting
 
 from django.shortcuts import get_object_or_404
 
-from .forms import SightingRequestForm
+from .forms import SightingRequestForm, SightingUpdateForm
 
 from django.http import JsonResponse
 
@@ -23,29 +23,19 @@ def list_all_sightings(request):
     return render(request,'squirrel/list_all_sightings.html',context)
 
 def update_sighting(request,unique_squirrel_id):
+    if request.method == 'POST':
+        sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
+        form = SightingUpdateForm(request.POST, instance=sighting)
+        if form.is_valid():
+            sighting.save()
+            return redirect('/sightings/')
+    
     sighting = get_object_or_404(Sighting, unique_squirrel_id=unique_squirrel_id)
-    form = SightingRequestForm(request.POST or None, instance=sighting)
+    form = SightingUpdateForm(instance=sighting)
     context = {
-            'form': form,
-            'latitude':sighting.latitude,
-            'longitude':sighting.longitude,
-            'shift':sighting.shift,
-            'date':sighting.date,
-            'age':sighting.age,
-            }
-    print(context)
-
-    '''
-    if form.is_valid():
-        sighting = form.save(commit=False)
-        sighting.save()
-        return redirect('/sightings/')
-    else:
-        context = {
-            'form': form,
-        }
-    '''
-    return render(request, 'squirrel/update_form.html', context)
+            'form':form,
+    }
+    return render(request, 'squirrel/update_sighting.html', context)
 
 def create_sighting(request):
     if request.method=='POST':
@@ -53,10 +43,12 @@ def create_sighting(request):
         if form.is_valid():
             form.save()
             return redirect("/sightings/")
-    else:
-        form = SightingRequestForm()
-        context = {'form': form, }
-        return render(request, 'squirrel/create_sighting.html', context)
+    
+    form = SightingRequestForm()
+    context = {
+            'form': form,
+    }
+    return render(request, 'squirrel/create_sighting.html', context)
 
 def general_stats(request):
     sightings = Sighting.objects.all()
