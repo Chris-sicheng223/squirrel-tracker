@@ -45,7 +45,7 @@ Method: GET
 
   - **Update Sighting View**: a view to update a particular sighting.
 
->Located at: /sightings/<unique-squirrel-id>   
+>Located at: /sightings/\<unique-squirrel-id\>   
 Method: GET & POST   
 
   - **Create Sighting View**: a view to create a new sighting.
